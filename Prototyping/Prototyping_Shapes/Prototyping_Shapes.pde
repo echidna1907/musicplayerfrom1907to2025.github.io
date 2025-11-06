@@ -32,6 +32,11 @@ float playY2 = triangleCenterY;
 float playX3 = triangleCenterX - (stopWidth * triangleScale) / 2;
 float playY3 = triangleCenterY + (stopHeight * triangleScale) / 2;
 
+float nextX =
+float nextY
+float nextWidth
+float nextHeight
+
 // Draw shapes
 rect(divX, divY, divWidth, divHeight); // Main rectangle
 rect(stopX, stopY, stopWidth, stopHeight); // Thinner second square
