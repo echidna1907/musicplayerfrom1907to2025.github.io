@@ -32,10 +32,10 @@ float playY2 = triangleCenterY;
 float playX3 = triangleCenterX - (stopWidth * triangleScale) / 2;
 float playY3 = triangleCenterY + (stopHeight * triangleScale) / 2;
 
-float nextX =
-float nextY
-float nextWidth
-float nextHeight
+float nextX = divX + divWidth * 0.5 / 4;
+float nextY = divY + divHeight * 2 / 4;
+float nextWidth = divWidth * 0.3 / 4;
+float nextHeight = divHeight * 1.5 / 4;
 
 // Draw shapes
 rect(divX, divY, divWidth, divHeight); // Main rectangle
