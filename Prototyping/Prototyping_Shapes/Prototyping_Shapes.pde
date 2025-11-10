@@ -32,13 +32,15 @@ float playY2 = triangleCenterY;
 float playX3 = triangleCenterX - (stopWidth * triangleScale) / 2;
 float playY3 = triangleCenterY + (stopHeight * triangleScale) / 2;
 
-float nextX = divX + divWidth * 0.5 / 4;
-float nextY = divY + divHeight * 2 / 4;
-float nextWidth = divWidth * 0.3 / 4;
-float nextHeight = divHeight * 1.5 / 4;
+// Update "next" variables
+float nextWidth = stopWidth; // Same width as the second square
+float nextHeight = stopHeight; // Same height as the second square
+float nextX = stopX - nextWidth; // Position to the left of the second square
+float nextY = stopY; // Align vertically with the second square
+
 
 // Draw shapes
 rect(divX, divY, divWidth, divHeight); // Main rectangle
 rect(stopX, stopY, stopWidth, stopHeight); // Thinner second square
 triangle(playX1, playY1, playX2, playY2, playX3, playY3); // Centered triangle
-rect(nextX, nextY, nextWidth, nextHeight);
+rect(nextX, nextY, nextWidth, nextHeight); // Third thinner second square
