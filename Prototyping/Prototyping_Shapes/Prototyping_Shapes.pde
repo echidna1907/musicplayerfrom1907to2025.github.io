@@ -16,9 +16,9 @@ float divY = (appHeight - divHeight) / 2;
 
 // Make the second square thinner and centered inside the first rectangle
 float stopX = divX + divWidth * 1.2 / 3; // Adjusted to center the thinner square
-float stopY = divY + divHeight * 3 / 4;
+float stopY = divY + divHeight * 3.4 / 4;
 float stopWidth = divWidth * 0.6 / 4; // Reduced width to make it thinner
-float stopHeight = divHeight * 0.5 / 2; // Keep the height the same
+float stopHeight = divHeight * 0.3 / 2; // Keep the height the same
 
 // Center the triangle inside the second square
 float triangleScale = 0.5; // Scale the triangle to 50% of the second square
@@ -27,7 +27,7 @@ float triangleCenterY = stopY + stopHeight / 2;
 
 float playX1 = triangleCenterX - (stopWidth * triangleScale) / 2;
 float playY1 = triangleCenterY - (stopHeight * triangleScale) / 2;
-float playX2 = triangleCenterX + (stopWidth * triangleScale) / 2;
+float playX2 = triangleCenterX + (stopWidth * triangleScale) / 3;
 float playY2 = triangleCenterY;
 float playX3 = triangleCenterX - (stopWidth * triangleScale) / 2;
 float playY3 = triangleCenterY + (stopHeight * triangleScale) / 2;
