@@ -15,10 +15,10 @@ float divX = (appWidth - divWidth) / 2;
 float divY = (appHeight - divHeight) / 2;
 
 // Make the second square thinner and centered inside the first rectangle
-float stopX = divX + divWidth * 1.2 / 3; // Adjusted to center the thinner square
-float stopY = divY + divHeight * 3.4 / 4;
-float stopWidth = divWidth * 0.6 / 4; // Reduced width to make it thinner
-float stopHeight = divHeight * 0.3 / 2; // Keep the height the same
+float stopX = divX + divWidth * 1.3 / 3; // Adjusted to center the thinner square
+float stopY = divY + divHeight * 3.2 / 4;
+float stopWidth = divWidth * 0.5 / 4; // Reduced width to make it thinner
+float stopHeight = divHeight * 0.4 / 2; // Keep the height the same
 
 // Center the triangle inside the second square
 float triangleScale = 0.5; // Scale the triangle to 50% of the second square
@@ -27,7 +27,7 @@ float triangleCenterY = stopY + stopHeight / 2;
 
 float playX1 = triangleCenterX - (stopWidth * triangleScale) / 2;
 float playY1 = triangleCenterY - (stopHeight * triangleScale) / 2;
-float playX2 = triangleCenterX + (stopWidth * triangleScale) / 3;
+float playX2 = triangleCenterX + (stopWidth * triangleScale) / 2;
 float playY2 = triangleCenterY;
 float playX3 = triangleCenterX - (stopWidth * triangleScale) / 2;
 float playY3 = triangleCenterY + (stopHeight * triangleScale) / 2;
@@ -38,9 +38,27 @@ float nextHeight = stopHeight; // Same height as the second square
 float nextX = stopX - nextWidth; // Position to the left of the second square
 float nextY = stopY; // Align vertically with the second square
 
+float previousWidth = stopWidth; // Same width as the stop rectangle
+float previousHeight = stopHeight; // Same height as the stop rectangle
+float previousX = nextX - previousWidth; // Position to the left of the next rectangle
+float previousY = stopY; // Align vertically with the stop rectangle
+
+float fastforwardWidth = stopWidth; // Same width as the stop rectangle
+float fastforwardHeight = stopHeight; // Same height as the stop rectangle
+float fastforwardX = stopX + stopWidth; // Position to the right of the stop rectangle
+float fastforwardY = stopY; // Align vertically with the stop rectangle
+
+float pauseWidth = stopWidth; // Same width as the stop rectangle
+float pauseHeight = stopHeight; // Same height as the stop rectangle
+float pauseX = previousX - pauseWidth; // Position to the left of the previous rectangle
+float pauseY = stopY; // Align vertically with the stop rectangle
+
 
 // Draw shapes
 rect(divX, divY, divWidth, divHeight); // Main rectangle
 rect(stopX, stopY, stopWidth, stopHeight); // Thinner second square
 triangle(playX1, playY1, playX2, playY2, playX3, playY3); // Centered triangle
 rect(nextX, nextY, nextWidth, nextHeight); // Third thinner second square
+rect(previousX, previousY, previousWidth, previousHeight);
+rect(fastforwardX, fastforwardY, fastforwardWidth, fastforwardHeight);
+rect(pauseX, pauseY, pauseWidth, pauseHeight);
