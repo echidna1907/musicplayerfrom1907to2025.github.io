@@ -53,6 +53,28 @@ float pauseHeight = stopHeight; // Same height as the stop rectangle
 float pauseX = previousX - pauseWidth; // Position to the left of the previous rectangle
 float pauseY = stopY; // Align vertically with the stop rectangle
 
+// Center the second triangle inside the fastforward rectangle
+float triangleoneScale = 0.5; // Scale the triangle to 50% of the fastforward rectangle
+float triangleoneCenterX = fastforwardX + fastforwardWidth / 2;
+float triangleoneCenterY = fastforwardY + fastforwardHeight / 2;
+
+float triangleoneX1 = triangleoneCenterX - (fastforwardWidth * triangleoneScale) / 2;
+float triangleoneY1 = triangleoneCenterY - (fastforwardHeight * triangleoneScale) / 1.8;
+float triangleoneX2 = triangleoneCenterX + (fastforwardWidth * triangleoneScale) / 6;
+float triangleoneY2 = triangleoneCenterY;
+float triangleoneX3 = triangleoneCenterX - (fastforwardWidth * triangleoneScale) / 2;
+float triangleoneY3 = triangleoneCenterY + (fastforwardHeight * triangleoneScale) / 1.8;
+
+// Offset to move triangletwo slightly to the left
+float triangletwoOffset = fastforwardWidth * -0.2; // Adjust this value as needed
+
+// Define triangletwo coordinates based on triangleone, shifted to the left
+float triangletwoX1 = triangleoneX1 - triangletwoOffset;
+float triangletwoY1 = triangleoneY1;
+float triangletwoX2 = triangleoneX2 - triangletwoOffset;
+float triangletwoY2 = triangleoneY2;
+float triangletwoX3 = triangleoneX3 - triangletwoOffset;
+float triangletwoY3 = triangleoneY3;
 
 // Draw shapes
 rect(divX, divY, divWidth, divHeight); // Main rectangle
@@ -62,3 +84,5 @@ rect(nextX, nextY, nextWidth, nextHeight); // Third thinner second square
 rect(previousX, previousY, previousWidth, previousHeight);
 rect(fastforwardX, fastforwardY, fastforwardWidth, fastforwardHeight);
 rect(pauseX, pauseY, pauseWidth, pauseHeight);
+triangle(triangleoneX1, triangleoneY1, triangleoneX2, triangleoneY2, triangleoneX3, triangleoneY3); // Triangle inside fastforward rectangle
+triangle(triangletwoX1, triangletwoY1, triangletwoX2, triangletwoY2, triangletwoX3, triangletwoY3); // Second triangle slightly to the left
