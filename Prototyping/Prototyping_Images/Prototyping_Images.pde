@@ -2,5 +2,8 @@
 - Old Man
 */ 
 //Display
-fullScreen(); //Lanscape
+//fullScreen(); //Lanscape
 size(500, 700); //Portrait
+int appWidth = displayWidth; //Width
+int appHeight = displayHeight; //Height
+println("Display VARS:", "appWidth:"+appWidth, "appHeight:"+appHeight, "\n\t\t\tdisplayWidth:"+displayWidth, "displayHeight:"+displayHeight, "width:"+width, "height:"+height);
