@@ -12,7 +12,7 @@ int appHeight = displayHeight; //Height
 float imageDivX = appWidth*1/4;
 float imageDivY = appHeight*1/10;
 float imageDivWidth = appWidth*1/2;
-float imageDivHeight = appHeight*4/5;
+float imageDivHeight = appHeight*4/5; //Make smaller to test Landscape
 // 
 //Image Aspect Ratio Vars & Algorithm
 //Directory or Pathway
@@ -27,7 +27,7 @@ PImage image1 = loadImage( imagePathway1 );
 int image1Width = 960;
 int image1Height = 970;
 //Aspect Ratio
-float image1AspectRation_GreaterOne = ( imageWidth1 >= imageHeight1 ) ? imageWidth1/imageHeight1 : imageHeight1/ImageWidth1 ;
+float image1AspectRatio_GreaterOne = ( image1Width >= image1Height ) ? float(image1Width)/float(image1Height) : float(image1Height)/float(image1Width);
 //DIV
 rect(imageDivX, imageDivY, imageDivWidth, imageDivHeight);
 //
