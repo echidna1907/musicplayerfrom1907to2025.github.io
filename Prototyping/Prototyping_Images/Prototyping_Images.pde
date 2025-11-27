@@ -24,12 +24,17 @@ String imagePathway1 = upArrow + folder + whatsapp_horse + fileExtensionJPG;
 //println("WhatsApp Horse Pathway:", imagePathway1);
 //Image Loading & Aspect Ratio
 PImage image1 = loadImage( imagePathway1 );
+
 int image1Width = 960;
 int image1Height = 970;
+
 //Aspect Ratio
 float image1AspectRatio_GreaterOne = ( image1Width >= image1Height ) ? float(image1Width)/float(image1Height) : float(image1Height)/float(image1Width);
 float imageWidthAdjusted1 = imageDivWidth;
 float imageHeightAdjusted1 = ( image1Width >= imageDivWidth ) ? imageWidthAdjusted1 / image1AspectRatio_GreaterOne : imageWidthAdjusted1 * image1AspectRatio_GreaterOne; 
+//if ( imageHeightAdjusted1 > imageDivHeight )   
+  //println("Image doesn't fit, program ended ... Fatal Flaw, must be solved ... Image doesn't show.");
+ // exit();
 //DIV
 rect(imageDivX, imageDivY, imageDivWidth, imageDivHeight);
 //
