@@ -8,11 +8,10 @@ int appWidth = displayWidth; //Width
 int appHeight = displayHeight; //Height
 //println("Display VARS:", "appWidth:"+appWidth, "appHeight:"+appHeight, "\n\t\t\tdisplayWidth:"+displayWidth, "displayHeight:"+displayHeight, "width:"+width, "height:"+height);
 //
-//Population
 float imageDivX = appWidth*1/4;
 float imageDivY = appHeight*1/10;
 float imageDivWidth = appWidth*1/2;
-float imageDivHeight = appHeight*4/5; //Make smaller to test Landscape
+float imageDivHeight = appHeight*4/5; 
 // 
 //Image Aspect Ratio Vars & Algorithm
 //Directory or Pathway
