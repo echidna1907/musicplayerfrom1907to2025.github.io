@@ -12,7 +12,11 @@ float stringDivX = appWidth*1/4;
 float stringDivY = appHeight*1/9;
 float stringDivWidth = appWidth*1/2;
 float stringDivHeight = appHeight*4/5;
-String title = "Wawe";
-
+String title = "Holy crackers";
+int fontSize = 50;
+PFont titleFont;
+String Papyrus = "Papyrus";
+ titleFont = createFont (Papyrus, fontSize);
 rect(stringDivX, stringDivY, stringDivWidth, stringDivHeight);
-text();
+fill(0);
+text(title, stringDivX, stringDivY, stringDivWidth, stringDivHeight);
