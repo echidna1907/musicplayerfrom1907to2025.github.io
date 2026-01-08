@@ -23,13 +23,13 @@ Minim minim; //initiates entire class - don't know yet
 int numberOfSongs = 1;
 int numberOfSoundEffects = 1;
 AudioPlayer[] playList = new AudioPlayer[ numberOfSongs ];
-AudioPlayer[] soundEffects = new AudioPlayer[ numberOfSoundEffects ];
+AudioPlayer[] SFX = new AudioPlayer[ numberOfSoundEffects ];
 int currentSong = numberOfSongs - numberOfSongs;
 fullScreen();
 int appWidth = width;
 int appHeight = height;
 minim = new Minim(this);
-String upArrow = "../../";
+String upArrow = "../../..";
 String musicFolder = "Music/";
 String mainSongsFolder = "Main Songs/";
 String SFXfolder = "Sound effects/";
@@ -43,3 +43,10 @@ String file = musicDirectory + Song1 + fileExtension_mp3;
 playList[ currentSong ] = minim.loadFile( file );
 file = SFXDirectory + SFX1 + fileExtension_mp3;
 SFX[currentSong] = minim.loadFile( file );
+ if ( playList[currentSong]==null || SFX[currentSong]==null) { //ERROR, play list is NULL
+    //See FILE or minim.loadFile
+    println("The Play List or Sound Effects did not load properly");
+    printArray(playList);
+    printArray(soundEffects);
+
+playList[currentSong].play();
