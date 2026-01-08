@@ -18,30 +18,10 @@
  - Reading Code the cursor & braces
  */
 //
-//Library - Minim
-import ddf.minim.*;
-import ddf.minim.analysis.*;
-import ddf.minim.effects.*;
-import ddf.minim.signals.*;
-import ddf.minim.spi.*;
-import ddf.minim.ugens.*;
-//Global Variables
-Minim minim; //initiates entire class - don't know yet
-int numberOfSongs = 1;
-int numberOfSoundEffects = 1;
-AudioPlayer[] songs = new AudioPlayer[ numberOfSongs ];
-AudioPlayer[] sfx = new AudioPlayer[ numberOfSoundEffects ];
-int currentSong = numberOfSongs - numberOfSongs;
-void setup() {
-  fullScreen();
-  int appWidth = width;
-  int appHeight = height;
-} //End setup
-//
-void draw() {
-} //End draw
-//
-void mousePressed() {
-} //End Mouse Pressed
-//
+void setup() {}
+
+void draw() {} //End draw
+
+void mousePressed() {}
+
 void keyPressed() []
