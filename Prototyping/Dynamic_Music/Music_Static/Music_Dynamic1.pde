@@ -48,5 +48,12 @@ SFX[currentSong] = minim.loadFile( file );
     println("The Play List or Sound Effects did not load properly");
     printArray(playList);
     printArray(soundEffects);
-
-playList[currentSong].play();
+void draw() {}
+  playList[ currentSong ].play(); //DRAW is deactived by noLoop()
+ }//End draw
+//
+void mousePressed() {
+} //End Mouse Pressed
+//
+void keyPressed() {
+}
