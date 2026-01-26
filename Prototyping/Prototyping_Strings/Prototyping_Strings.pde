@@ -15,11 +15,11 @@ float stringDivHeight = appHeight * 1 / 5;
 String title = "Holy crackers";
 float fontSize = 156;
 PFont titleFont;
-String Papyrus = "Papyrus";
-titleFont = createFont(Papyrus, fontSize);
+String Andalus = "Andalus";
+titleFont = createFont(Andalus, fontSize);
 rect(stringDivX, stringDivY, stringDivWidth, stringDivHeight);
 color greenInk = #10FF0D;
 fill(greenInk);
 textFont(titleFont, fontSize); // Set the font and size BEFORE drawing the text
 text(title, stringDivX, stringDivY, stringDivWidth, stringDivHeight);
-if (stringDivX > appHeight);
+textAlign (CENTER, CENTER);
