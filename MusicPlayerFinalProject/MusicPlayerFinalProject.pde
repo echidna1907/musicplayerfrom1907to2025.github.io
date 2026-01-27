@@ -1,140 +1,241 @@
-/* Aspect Ratio: Bike Only Demonstration
-- Old Man
-*/ 
-//Display
-fullScreen(); //Lanscape
-size(500, 700); //Portrait
-int appWidth = displayWidth; //Width
-int appHeight = displayHeight; //Height
-//println("Display VARS:", "appWidth:"+appWidth, "appHeight:"+appHeight, "\n\t\t\tdisplayWidth:"+displayWidth, "displayHeight:"+displayHeight, "width:"+width, "height:"+height);
-//
-float imageDivX = appWidth*1/4;
-float imageDivY = appHeight*1/10;
-float imageDivWidth = appWidth*1/2;
-float imageDivHeight = appHeight*4/5; 
-// 
-//Image Aspect Ratio Vars & Algorithm
-//Directory or Pathway
-String upArrow = "../../";
-String folder = "Dependent Folder/Images/";
-String whatsapp_horse = "whatsapp_horse";
-String fileExtensionJPG = ".jpg";
-String imagePathway1 = upArrow + folder + whatsapp_horse + fileExtensionJPG;
-//println("WhatsApp Horse Pathway:", imagePathway1);
-//Image Loading & Aspect Ratio
-PImage image1 = loadImage( imagePathway1 );
+// ============================================================
+// IMPORTS - Must be at the top
+// ============================================================
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
 
-int image1Width = 960;
-int image1Height = 930;
+// ============================================================
+// GLOBAL VARIABLES
+// ============================================================
+Minim minim;
+int numberOfSongs = 3;
+int numberOfSoundEffects = 1;
+AudioPlayer[] playList = new AudioPlayer[numberOfSongs];
+AudioPlayer[] SFX = new AudioPlayer[numberOfSoundEffects];
+int currentSong = 0;
 
-//Aspect Ratio
-float image1AspectRatio_GreaterOne = ( image1Width >= image1Height ) ? float(image1Width)/float(image1Height) : float(image1Height)/float(image1Width);
-float imageWidthAdjusted1 = imageDivWidth;
-float imageHeightAdjusted1 = ( image1Width >= imageDivWidth ) ? imageWidthAdjusted1 / image1AspectRatio_GreaterOne : imageWidthAdjusted1 * image1AspectRatio_GreaterOne; 
-if ( imageHeightAdjusted1 > imageDivHeight ) {
-  println("Image doesn't fit, program ended ... Fatal Flaw, must be solved ... Image doesn't show.");
-  //exit();
-  int indexWhile = 0; //Local Variable to IF-Statement
-  //** WHILE Loops can run infinitely with an error if not controlled
-  while ( imageHeightAdjusted1<imageDivHeight ) {
-    println("Iteration of Pixel WHILE Loop", indexWhile++); 
-    if ( indexWhile < 10000 ) {
-    } else {
-      println("ERROR: infinite loop, Image Pixel WHILE, value:", indexWhile);
-      //exit(); //doesn't work, must force WHILE Stop
-      imageHeightAdjusted1=imageDivHeight;
-    }
-    imageHeightAdjusted1++;
-    println("Inspection of percent dcrease:", imageWidthAdjusted1, imageHeightAdjusted1, imageDivHeight);
-  } 
+// Display & Layout
+int appWidth;
+int appHeight;
+
+// Image variables
+PImage image1;
+float imageDivX, imageDivY, imageDivWidth, imageDivHeight;
+float imageWidthAdjusted1, imageHeightAdjusted1;
+
+// UI Button variables
+float divWidth, divHeight, divX, divY;
+float stopX, stopY, stopWidth, stopHeight;
+float playX1, playY1, playX2, playY2, playX3, playY3;
+float fastforwardX, fastforwardY, fastforwardWidth, fastforwardHeight;
+float triangleoneX1, triangleoneY1, triangleoneX2, triangleoneY2, triangleoneX3, triangleoneY3;
+float triangletwoX1, triangletwoY1, triangletwoX2, triangletwoY2, triangletwoX3, triangletwoY3;
+
+void setup() {
+  fullScreen();
+  appWidth = width;
+  appHeight = height;
   
-} 
-rect(imageDivX, imageDivY, imageDivWidth, imageDivHeight);
-//
-image(image1, imageDivX, imageDivY, image1Width, image1Height);
-image( image1, imageDivX, imageDivY, imageWidthAdjusted1, imageHeightAdjusted1);
-/* DIVs: 2D Rectangles
-*/
+  minim = new Minim(this);
+  
+  // Load Audio Files
+  String upArrow = "../";
+  String musicFolder = "Music/";
+  String SFXfolder = "Sound Effects/";
+  String mainSongsFolder = "Main Songs/";
+  String[] songName = new String[numberOfSongs];
+  songName[0] = "Bad Bunny - Tarot [Feat. Jhay Cortez]";
+  songName[1] = "Bakar - Hell N Back";
+  songName[2] = "Night Fever (From Saturday Night Fever Soundtrack) - Bee Gees";
+  String SFX1 = "HD - Clash Royale Tap Button Sound Effect";
+  String fileExtension_mp3 = ".mp3";
+  String musicDirectory = upArrow + musicFolder + mainSongsFolder;
+  String SFXDirectory = upArrow + musicFolder + SFXfolder;
+  String file;
+  
+  for (int i = 0; i < numberOfSongs; i++) {
+    file = musicDirectory + songName[i] + fileExtension_mp3;
+    playList[i] = minim.loadFile(file);
+  }
+  
+  file = SFXDirectory + SFX1 + fileExtension_mp3;
+  SFX[0] = minim.loadFile(file);
+  
+  if (playList[0] == null || SFX[0] == null) {
+    println("The Play List or Sound Effects did not load properly");
+    println("Music file attempted: " + musicDirectory + songName[0] + fileExtension_mp3);
+    println("SFX file attempted: " + SFXDirectory + SFX1 + fileExtension_mp3);
+    printArray(playList);
+    printArray(SFX);
+  }
+  
+  // Load Image
+  String imageUpArrow = "../../";
+  String imageFolder = "Dependent Folder/Images/";
+  String whatsapp_horse = "whatsapp_horse";
+  String fileExtensionJPG = ".jpg";
+  String imagePathway1 = imageUpArrow + imageFolder + whatsapp_horse + fileExtensionJPG;
+  image1 = loadImage(imagePathway1);
+  
+  // Calculate Image Layout
+  imageDivX = appWidth * 1/4;
+  imageDivY = appHeight * 1/10;
+  imageDivWidth = appWidth * 1/2;
+  imageDivHeight = appHeight * 4/5;
+  
+  // Image Aspect Ratio Calculation
+  int image1Width = 960;
+  int image1Height = 930;
+  float image1AspectRatio_GreaterOne = (image1Width >= image1Height) ? float(image1Width)/float(image1Height) : float(image1Height)/float(image1Width);
+  imageWidthAdjusted1 = imageDivWidth;
+  imageHeightAdjusted1 = (image1Width >= imageDivWidth) ? imageWidthAdjusted1 / image1AspectRatio_GreaterOne : imageWidthAdjusted1 * image1AspectRatio_GreaterOne;
+  
+  // Handle image height overflow
+  if (imageHeightAdjusted1 > imageDivHeight) {
+    println("Image doesn't fit, adjusting...");
+    int indexWhile = 0;
+    while (imageHeightAdjusted1 < imageDivHeight) {
+      println("Iteration of Pixel WHILE Loop", indexWhile++);
+      if (indexWhile < 10000) {
+      } else {
+        println("ERROR: infinite loop, Image Pixel WHILE, value:", indexWhile);
+        imageHeightAdjusted1 = imageDivHeight;
+      }
+      imageHeightAdjusted1++;
+      println("Inspection of percent decrease:", imageWidthAdjusted1, imageHeightAdjusted1, imageDivHeight);
+    }
+  }
+  
+  // Calculate UI Button Positions
+  divWidth = appWidth * 0.5;
+  divHeight = appHeight * 0.5;
+  divX = (appWidth - divWidth) / 2;
+  divY = (appHeight - divHeight) / 2;
+  
+  stopX = divX + divWidth * 1.3 / 3;
+  stopY = divY + divHeight * 3.2 / 4;
+  stopWidth = divWidth * 0.5 / 4;
+  stopHeight = divHeight * 0.4 / 2;
+  
+  // Play Triangle
+  float triangleScale = 0.5;
+  float triangleCenterX = stopX + stopWidth / 2;
+  float triangleCenterY = stopY + stopHeight / 2;
+  playX1 = triangleCenterX - (stopWidth * triangleScale) / 2;
+  playY1 = triangleCenterY - (stopHeight * triangleScale) / 2;
+  playX2 = triangleCenterX + (stopWidth * triangleScale) / 2;
+  playY2 = triangleCenterY;
+  playX3 = triangleCenterX - (stopWidth * triangleScale) / 2;
+  playY3 = triangleCenterY + (stopHeight * triangleScale) / 2;
+  
+  // Fast Forward Rectangle and Triangles
+  fastforwardWidth = stopWidth;
+  fastforwardHeight = stopHeight;
+  fastforwardX = stopX + stopWidth;
+  fastforwardY = stopY;
+  
+  float triangleoneScale = 0.5;
+  float triangleoneCenterX = fastforwardX + fastforwardWidth / 2;
+  float triangleoneCenterY = fastforwardY + fastforwardHeight / 2;
+  
+  triangleoneX1 = triangleoneCenterX - (fastforwardWidth * triangleoneScale) / 2;
+  triangleoneY1 = triangleoneCenterY - (fastforwardHeight * triangleoneScale) / 1.8;
+  triangleoneX2 = triangleoneCenterX + (fastforwardWidth * triangleoneScale) / 6;
+  triangleoneY2 = triangleoneCenterY;
+  triangleoneX3 = triangleoneCenterX - (fastforwardWidth * triangleoneScale) / 2;
+  triangleoneY3 = triangleoneCenterY + (fastforwardHeight * triangleoneScale) / 1.8;
+  
+  float triangletwoOffset = fastforwardWidth * -0.2;
+  triangletwoX1 = triangleoneX1 - triangletwoOffset;
+  triangletwoY1 = triangleoneY1;
+  triangletwoX2 = triangleoneX2 - triangletwoOffset;
+  triangletwoY2 = triangleoneY2;
+  triangletwoX3 = triangleoneX3 - triangletwoOffset;
+  triangletwoY3 = triangleoneY3;
+}
 
-// Set fullscreen mode
-fullScreen(); // displayWidth and displayHeight
-println(displayWidth, displayHeight);
+void draw() {
+  background(255);
+  
+  // Draw image container
+  rect(imageDivX, imageDivY, imageDivWidth, imageDivHeight);
+  
+  // Draw image with adjusted aspect ratio
+  if (image1 != null) {
+    image(image1, imageDivX, imageDivY, imageWidthAdjusted1, imageHeightAdjusted1);
+  }
+  
+  // Draw UI buttons
+  rect(stopX, stopY, stopWidth, stopHeight);
+  triangle(playX1, playY1, playX2, playY2, playX3, playY3);
+}
 
-// Make the main rectangle smaller
-float divWidth = appWidth * 0.5; // 50% of screen width
-float divHeight = appHeight * 0.5; // 50% of screen height
-float divX = (appWidth - divWidth) / 2;
-float divY = (appHeight - divHeight) / 2;
+void mousePressed() {
+  // Add mouse interaction for buttons here if needed
+}
 
-// Make the second square thinner and centered inside the first rectangle
-float stopX = divX + divWidth * 1.3 / 3; // Adjusted to center the thinner square
-float stopY = divY + divHeight * 3.2 / 4;
-float stopWidth = divWidth * 0.5 / 4; // Reduced width to make it thinner
-float stopHeight = divHeight * 0.4 / 2; // Keep the height the same
-
-// Center the triangle inside the second square
-float triangleScale = 0.5; // Scale the triangle to 50% of the second square
-float triangleCenterX = stopX + stopWidth / 2;
-float triangleCenterY = stopY + stopHeight / 2;
-
-float playX1 = triangleCenterX - (stopWidth * triangleScale) / 2;
-float playY1 = triangleCenterY - (stopHeight * triangleScale) / 2;
-float playX2 = triangleCenterX + (stopWidth * triangleScale) / 2;
-float playY2 = triangleCenterY;
-float playX3 = triangleCenterX - (stopWidth * triangleScale) / 2;
-float playY3 = triangleCenterY + (stopHeight * triangleScale) / 2;
-
-// Update "next" variables
-float nextWidth = stopWidth; // Same width as the second square
-float nextHeight = stopHeight; // Same height as the second square
-float nextX = stopX - nextWidth; // Position to the left of the second square
-float nextY = stopY; // Align vertically with the second square
-
-float previousWidth = stopWidth; // Same width as the stop rectangle
-float previousHeight = stopHeight; // Same height as the stop rectangle
-float previousX = nextX - previousWidth; // Position to the left of the next rectangle
-float previousY = stopY; // Align vertically with the stop rectangle
-
-float fastforwardWidth = stopWidth; // Same width as the stop rectangle
-float fastforwardHeight = stopHeight; // Same height as the stop rectangle
-float fastforwardX = stopX + stopWidth; // Position to the right of the stop rectangle
-float fastforwardY = stopY; // Align vertically with the stop rectangle
-
-float pauseWidth = stopWidth; // Same width as the stop rectangle
-float pauseHeight = stopHeight; // Same height as the stop rectangle
-float pauseX = previousX - pauseWidth; // Position to the left of the previous rectangle
-float pauseY = stopY; // Align vertically with the stop rectangle
-
-// Center the second triangle inside the fastforward rectangle
-float triangleoneScale = 0.5; // Scale the triangle to 50% of the fastforward rectangle
-float triangleoneCenterX = fastforwardX + fastforwardWidth / 2;
-float triangleoneCenterY = fastforwardY + fastforwardHeight / 2;
-
-float triangleoneX1 = triangleoneCenterX - (fastforwardWidth * triangleoneScale) / 2;
-float triangleoneY1 = triangleoneCenterY - (fastforwardHeight * triangleoneScale) / 1.8;
-float triangleoneX2 = triangleoneCenterX + (fastforwardWidth * triangleoneScale) / 6;
-float triangleoneY2 = triangleoneCenterY;
-float triangleoneX3 = triangleoneCenterX - (fastforwardWidth * triangleoneScale) / 2;
-float triangleoneY3 = triangleoneCenterY + (fastforwardHeight * triangleoneScale) / 1.8;
-
-// Offset to move triangletwo slightly to the left
-float triangletwoOffset = fastforwardWidth * -0.2; // Adjust this value as needed
-
-// Define triangletwo coordinates based on triangleone, shifted to the left
-float triangletwoX1 = triangleoneX1 - triangletwoOffset;
-float triangletwoY1 = triangleoneY1;
-float triangletwoX2 = triangleoneX2 - triangletwoOffset;
-float triangletwoY2 = triangleoneY2;
-float triangletwoX3 = triangleoneX3 - triangletwoOffset;
-float triangletwoY3 = triangleoneY3;
-
-// Draw shapes
-rect(divX, divY, divWidth, divHeight); // Main rectangle
-rect(stopX, stopY, stopWidth, stopHeight); // Thinner second square
-triangle(playX1, playY1, playX2, playY2, playX3, playY3); // Centered triangle
-rect(nextX, nextY, nextWidth, nextHeight); // Third thinner second square
-rect(previousX, previousY, previousWidth, previousHeight);
-rect(fastforwardX, fastforwardY, fastforwardWidth, fastforwardHeight);
-rect(pauseX, pauseY, pauseWidth, pauseHeight);
-triangle(triangleoneX1, triangleoneY1, triangleoneX2, triangleoneY2, triangleoneX3, triangleoneY3); // Triangle inside fastforward rectangle
-triangle(triangletwoX1, triangletwoY1, triangletwoX2, triangletwoY2, triangletwoX3, triangletwoY3); // Second triangle slightly to the left
+void keyPressed() {
+  if (key == 'P' || key == 'p') playList[currentSong].loop(0);
+  
+  if (key == 'O' || key == 'o') { 
+    if (playList[currentSong].isPlaying()) {
+      playList[currentSong].pause();
+    } else {
+      playList[currentSong].play();
+    }
+  }
+  
+  if (key == 'S' || key == 's') { 
+    if (playList[currentSong].isPlaying()) {
+      playList[currentSong].pause();
+    } else {
+      playList[currentSong].rewind();
+    }
+  }
+  
+  if (key == 'L' || key == 'l') playList[currentSong].loop(1);
+  if (key == 'K' || key == 'k') playList[currentSong].loop();
+  if (key == 'F' || key == 'f') playList[currentSong].skip(10000);
+  if (key == 'R' || key == 'r') playList[currentSong].skip(-10000);
+  
+  if (key == 'W' || key == 'w') { // MUTE
+    if (playList[currentSong].isMuted()) {
+      playList[currentSong].unmute();
+    } else {
+      playList[currentSong].mute();
+    }
+  }
+  
+  if (key == CODED && keyCode == ESC) exit();
+  if (key == 'Q' || key == 'q') exit();
+  
+  if (key == 'N' || key == 'n') { 
+    if (playList[currentSong].isPlaying()) {
+      playList[currentSong].pause();
+      playList[currentSong].rewind();
+      
+      if (currentSong == numberOfSongs - 1) {
+        currentSong = 0;
+      } else {
+        currentSong++;
+      }
+      playList[currentSong].play();
+    } else {
+      playList[currentSong].rewind();
+      
+      if (currentSong == numberOfSongs - 1) {
+        currentSong = 0;
+      } else {
+        currentSong++;
+      }
+    }
+  }
+  
+  if (key == 'Y' || key == 'y') { // RANDOM
+    currentSong = int(random(numberOfSongs));
+  }
+}
